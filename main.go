@@ -38,7 +38,7 @@ func main() {
 	}
 
 	if id == "" {
-		gid, err := getId()
+		gid, err := getID()
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -50,7 +50,7 @@ func main() {
 	}
 }
 
-func getId() (string, error) {
+func getID() (string, error) {
 	idFile := []string{"id.txt", "id"}
 	for _, v := range idFile {
 		target := filepath.Join(exeDir, v)
@@ -65,7 +65,7 @@ func getId() (string, error) {
 			return sc.Text(), nil
 		}
 	}
-	return "", fmt.Errorf("couldn't find id file.")
+	return "", fmt.Errorf("couldn't find id file")
 }
 
 func run() error {
@@ -99,18 +99,18 @@ func getLog(log string) error {
 	fmt.Println(logpath)
 	resp, err := http.Get("https://tenhou.net/0/log/find.cgi?log=" + log)
 	if err != nil {
-		return fmt.Errorf("failed to download log %s.\n", log)
+		return fmt.Errorf("failed to download log %s", log)
 	}
 	defer resp.Body.Close()
 	file, err := os.Create(logpath)
 	if err != nil {
-		return fmt.Errorf("failed to make mjlog file.\n")
+		return fmt.Errorf("failed to make mjlog file")
 	}
 	defer file.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return fmt.Errorf("failed to read logfile.\n")
+		return fmt.Errorf("failed to read logfile")
 	}
 	file.Write(body)
 
