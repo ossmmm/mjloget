@@ -12,6 +12,8 @@ import (
 	"regexp"
 )
 
+const version = "v0.1"
+
 var (
 	exeFile string
 	exeDir  string
@@ -25,12 +27,21 @@ func init() {
 }
 
 func main() {
+	var showVersion bool
+	flag.BoolVar(&showVersion, "v", false, "show version.")
+	flag.BoolVar(&showVersion, "version", false, "show version.")
+
 	flag.StringVar(&destDir, "d", exeDir, "Save location. If not specified, directory at executable file.\n")
 
 	flag.StringVar(&id, "i", "", "Your tenhou.net id 'ID########-########'\n"+
 		"If not specified, it refers to a file named id.txt or id \nin the directory containing mjloget")
 
 	flag.Parse()
+
+	if showVersion {
+		fmt.Println("version:", version)
+		return
+	}
 
 	if s, err := os.Stat(destDir); os.IsNotExist(err) || !s.IsDir() {
 		fmt.Fprintf(os.Stderr, "-d:%v does not exist or is not directory\n", destDir)
